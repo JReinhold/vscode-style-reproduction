@@ -1,6 +1,7 @@
 # VS Code MCP Apps Style Bug Reproduction
 
-<video src="./media/reproductio-video.mp4" controls width="100%"></video>
+
+![Demo of reproduction](./media/reproduction-video.mp4)
 
 > **Note:** MCP Apps UI resources are only available in **VS Code Insiders** as of 2026-01-14.
 
@@ -56,7 +57,7 @@ After toggling theme:
 ### 1. Clone and Install
 
 ```bash
-git clone <this-repo>
+git clone git@github.com:JReinhold/vscode-style-reproduction.git
 cd vscode-style-reproduction
 npm install
 ```
