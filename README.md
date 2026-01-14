@@ -1,6 +1,6 @@
 # VS Code MCP Apps Style Bug Reproduction
 
-https://github.com/JReinhold/vscode-style-reproduction/raw/refs/heads/main/media/reproduction-video.mp4
+https://github.com/user-attachments/assets/9da96aca-d74b-46d3-80be-1eed5997e8f9
 
 > **Note:** MCP Apps UI resources are only available in **VS Code Insiders** as of 2026-01-14.
 
