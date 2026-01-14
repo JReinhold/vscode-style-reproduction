@@ -1,0 +1,19 @@
+{
+  "name": "vscode-style-reproduction",
+  "version": "1.0.0",
+  "description": "Simple MCP server reproduction",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "jreinhold",
+  "type": "module",
+  "dependencies": {
+    "tmcp": "latest",
+    "@tmcp/adapter-valibot": "latest",
+    "@tmcp/transport-http": "latest",
+    "zod": "latest",
+    "srvx": "latest"
+  }
+}

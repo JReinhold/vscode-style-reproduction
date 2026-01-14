@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+						
+			html, body {
+				font-family: var(--font-sans, system-ui, sans-serif);
+				font-size: var(--font-text-md-size, 14px);
+				line-height: var(--font-text-md-line-height, 1.5);
+				color: var(--color-text-primary, #000);
+				background: var(--color-background-primary, #fff);
+				padding: 1rem;
+			}
+			
+			h1 {
+				font-size: var(--font-heading-lg-size);
+				line-height: var(--font-heading-lg-line-height);
+				font-weight: var(--font-weight-bold);
+				margin-bottom: 1rem;
+			}
+			
+			h2 {
+				font-size: var(--font-heading-md-size);
+				line-height: var(--font-heading-md-line-height);
+				font-weight: var(--font-weight-semibold);
+				margin: 1.5rem 0 0.5rem;
+				color: var(--color-text-secondary);
+			}
+			
+			.section {
+				margin-bottom: 1.5rem;
+				padding: 1rem;
+				background: var(--color-background-secondary);
+				border: var(--border-width-regular) solid var(--color-border-primary);
+				border-radius: var(--border-radius-md);
+			}
+			
+			/* Color swatches */
+			.color-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+				gap: 0.5rem;
+			}
+			
+			.swatch {
+				padding: 0.5rem;
+				border-radius: var(--border-radius-sm);
+				border: var(--border-width-regular) solid var(--color-border-secondary);
+				font-size: var(--font-text-xs-size);
+				text-align: center;
+			}
+			
+			.swatch-label {
+				font-family: var(--font-mono);
+				font-size: 0.65rem;
+				word-break: break-all;
+			}
+			
+			/* Background color swatches */
+			.bg-primary { background: var(--color-background-primary); }
+			.bg-secondary { background: var(--color-background-secondary); }
+			.bg-tertiary { background: var(--color-background-tertiary); }
+			.bg-inverse { background: var(--color-background-inverse); color: var(--color-text-inverse); }
+			.bg-ghost { background: var(--color-background-ghost); }
+			.bg-info { background: var(--color-background-info); }
+			.bg-danger { background: var(--color-background-danger); }
+			.bg-success { background: var(--color-background-success); }
+			.bg-warning { background: var(--color-background-warning); }
+			.bg-disabled { background: var(--color-background-disabled); }
+			
+			/* Text color samples */
+			.text-primary { color: var(--color-text-primary); }
+			.text-secondary { color: var(--color-text-secondary); }
+			.text-tertiary { color: var(--color-text-tertiary); }
+			.text-inverse { color: var(--color-text-inverse); background: var(--color-background-inverse); }
+			.text-info { color: var(--color-text-info); }
+			.text-danger { color: var(--color-text-danger); }
+			.text-success { color: var(--color-text-success); }
+			.text-warning { color: var(--color-text-warning); }
+			.text-disabled { color: var(--color-text-disabled); }
+			.text-ghost { color: var(--color-text-ghost); }
+			
+			/* Border samples */
+			.border-sample {
+				padding: 0.5rem;
+				margin: 0.25rem;
+				border-width: var(--border-width-regular);
+				border-style: solid;
+				border-radius: var(--border-radius-sm);
+			}
+			.border-primary { border-color: var(--color-border-primary); }
+			.border-secondary { border-color: var(--color-border-secondary); }
+			.border-tertiary { border-color: var(--color-border-tertiary); }
+			.border-inverse { border-color: var(--color-border-inverse); }
+			.border-ghost { border-color: var(--color-border-ghost); }
+			.border-info { border-color: var(--color-border-info); }
+			.border-danger { border-color: var(--color-border-danger); }
+			.border-success { border-color: var(--color-border-success); }
+			.border-warning { border-color: var(--color-border-warning); }
+			.border-disabled { border-color: var(--color-border-disabled); }
+			
+			/* Ring samples */
+			.ring-sample {
+				padding: 0.5rem;
+				margin: 0.25rem;
+				outline-width: 2px;
+				outline-style: solid;
+				outline-offset: 2px;
+				border-radius: var(--border-radius-sm);
+			}
+			.ring-primary { outline-color: var(--color-ring-primary); }
+			.ring-secondary { outline-color: var(--color-ring-secondary); }
+			.ring-inverse { outline-color: var(--color-ring-inverse); background: var(--color-background-inverse); color: var(--color-text-inverse); }
+			.ring-info { outline-color: var(--color-ring-info); }
+			.ring-danger { outline-color: var(--color-ring-danger); }
+			.ring-success { outline-color: var(--color-ring-success); }
+			.ring-warning { outline-color: var(--color-ring-warning); }
+			
+			/* Typography samples */
+			.font-sans-sample { font-family: var(--font-sans); }
+			.font-mono-sample { font-family: var(--font-mono); }
+			
+			.weight-normal { font-weight: var(--font-weight-normal); }
+			.weight-medium { font-weight: var(--font-weight-medium); }
+			.weight-semibold { font-weight: var(--font-weight-semibold); }
+			.weight-bold { font-weight: var(--font-weight-bold); }
+			
+			/* Radius samples */
+			.radius-grid {
+				display: flex;
+				gap: 0.5rem;
+				flex-wrap: wrap;
+			}
+			.radius-sample {
+				width: 60px;
+				height: 60px;
+				background: var(--color-background-info);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: var(--font-text-xs-size);
+			}
+			.radius-xs { border-radius: var(--border-radius-xs); }
+			.radius-sm { border-radius: var(--border-radius-sm); }
+			.radius-md { border-radius: var(--border-radius-md); }
+			.radius-lg { border-radius: var(--border-radius-lg); }
+			.radius-xl { border-radius: var(--border-radius-xl); }
+			.radius-full { border-radius: var(--border-radius-full); }
+			
+			/* Shadow samples */
+			.shadow-grid {
+				display: flex;
+				gap: 1rem;
+				flex-wrap: wrap;
+			}
+			.shadow-sample {
+				width: 80px;
+				height: 80px;
+				background: var(--color-background-primary);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: var(--font-text-xs-size);
+				border-radius: var(--border-radius-md);
+			}
+			.shadow-hairline { box-shadow: var(--shadow-hairline); }
+			.shadow-sm { box-shadow: var(--shadow-sm); }
+			.shadow-md { box-shadow: var(--shadow-md); }
+			.shadow-lg { box-shadow: var(--shadow-lg); }
+			
+			/* Debug section */
+			#debug {
+				margin-top: 2rem;
+				padding: 1rem;
+				background: var(--color-background-tertiary);
+				border-radius: var(--border-radius-md);
+				font-family: var(--font-mono);
+				font-size: var(--font-text-xs-size);
+				max-height: 400px;
+				overflow: auto;
+			}
+			
+			#debug h2 {
+				font-family: var(--font-sans);
+			}
+			
+			.debug-row {
+				display: flex;
+				gap: 1rem;
+				padding: 0.25rem 0;
+				border-bottom: 1px solid var(--color-border-primary);
+			}
+			
+			.debug-var {
+				flex: 0 0 280px;
+				color: var(--color-text-info);
+			}
+			
+			.debug-value {
+				flex: 1;
+				color: var(--color-text-secondary);
+			}
+			
+			.debug-computed {
+				flex: 0 0 200px;
+				color: var(--color-text-success);
+			}
+			
+			.status {
+				padding: 0.5rem 1rem;
+				border-radius: var(--border-radius-md);
+				margin-bottom: 1rem;
+			}
+			.status-waiting {
+				background: var(--color-background-warning);
+				color: var(--color-text-warning);
+			}
+			.status-ready {
+				background: var(--color-background-success);
+				color: var(--color-text-success);
+			}
+		</style>
+		<script type="module">
+			const PROTOCOL_VERSION = '2025-11-21';
+
+			const METHODS = {
+				INITIALIZE: 'ui/initialize',
+				INITIALIZED: 'ui/notifications/initialized',
+				TOOL_INPUT: 'ui/notifications/tool-input',
+				TOOL_RESULT: 'ui/notifications/tool-result',
+				SIZE_CHANGED: 'ui/notifications/size-changed',
+			};
+
+			// All CSS custom properties from the MCP Apps spec
+			const CSS_VARIABLES = [
+				// Background colors
+				'--color-background-primary',
+				'--color-background-secondary',
+				'--color-background-tertiary',
+				'--color-background-inverse',
+				'--color-background-ghost',
+				'--color-background-info',
+				'--color-background-danger',
+				'--color-background-success',
+				'--color-background-warning',
+				'--color-background-disabled',
+				// Text colors
+				'--color-text-primary',
+				'--color-text-secondary',
+				'--color-text-tertiary',
+				'--color-text-inverse',
+				'--color-text-info',
+				'--color-text-danger',
+				'--color-text-success',
+				'--color-text-warning',
+				'--color-text-disabled',
+				'--color-text-ghost',
+				// Border colors
+				'--color-border-primary',
+				'--color-border-secondary',
+				'--color-border-tertiary',
+				'--color-border-inverse',
+				'--color-border-ghost',
+				'--color-border-info',
+				'--color-border-danger',
+				'--color-border-success',
+				'--color-border-warning',
+				'--color-border-disabled',
+				// Ring colors
+				'--color-ring-primary',
+				'--color-ring-secondary',
+				'--color-ring-inverse',
+				'--color-ring-info',
+				'--color-ring-danger',
+				'--color-ring-success',
+				'--color-ring-warning',
+				// Typography - Family
+				'--font-sans',
+				'--font-mono',
+				// Typography - Weight
+				'--font-weight-normal',
+				'--font-weight-medium',
+				'--font-weight-semibold',
+				'--font-weight-bold',
+				// Typography - Text Size
+				'--font-text-xs-size',
+				'--font-text-sm-size',
+				'--font-text-md-size',
+				'--font-text-lg-size',
+				// Typography - Heading Size
+				'--font-heading-xs-size',
+				'--font-heading-sm-size',
+				'--font-heading-md-size',
+				'--font-heading-lg-size',
+				'--font-heading-xl-size',
+				'--font-heading-2xl-size',
+				'--font-heading-3xl-size',
+				// Typography - Text Line Height
+				'--font-text-xs-line-height',
+				'--font-text-sm-line-height',
+				'--font-text-md-line-height',
+				'--font-text-lg-line-height',
+				// Typography - Heading Line Height
+				'--font-heading-xs-line-height',
+				'--font-heading-sm-line-height',
+				'--font-heading-md-line-height',
+				'--font-heading-lg-line-height',
+				'--font-heading-xl-line-height',
+				'--font-heading-2xl-line-height',
+				'--font-heading-3xl-line-height',
+				// Border radius
+				'--border-radius-xs',
+				'--border-radius-sm',
+				'--border-radius-md',
+				'--border-radius-lg',
+				'--border-radius-xl',
+				'--border-radius-full',
+				// Border width
+				'--border-width-regular',
+				// Shadows
+				'--shadow-hairline',
+				'--shadow-sm',
+				'--shadow-md',
+				'--shadow-lg',
+			];
+
+			let hostStyles = {};
+			let nextId = 1;
+
+			function sendRequest(method, params) {
+				const id = nextId++;
+				window.parent.postMessage({ jsonrpc: '2.0', id, method, params }, '*');
+				return new Promise((resolve, reject) => {
+					function listener(event) {
+						if (event.data?.id === id) {
+							window.removeEventListener('message', listener);
+							if (event.data?.result) {
+								resolve(event.data.result);
+							} else if (event.data?.error) {
+								reject(new Error(event.data.error.message || event.data.error));
+							}
+						}
+					}
+					window.addEventListener('message', listener);
+				});
+			}
+
+			function sendNotification(method, params) {
+				window.parent.postMessage({ jsonrpc: '2.0', method, params }, '*');
+			}
+
+			function onNotification(method, handler) {
+				window.addEventListener('message', (event) => {
+					if (event.data?.method === method) {
+						handler(event.data.params);
+					}
+				});
+			}
+
+			function logVscodeStyles() {
+				const htmlStyle = document.documentElement.style;
+				const vscodeProps = [];
+				for (let i = 0; i < htmlStyle.length; i++) {
+					const prop = htmlStyle[i];
+					if (prop.startsWith('--vscode-')) {
+						vscodeProps.push(prop);
+					}
+				}
+				if (vscodeProps.length > 0) {
+					console.log(`✅ ${vscodeProps.length} --vscode-* properties SET on <html>:`, vscodeProps.slice(0, 5).join(', '), '...');
+				} else {
+					console.log('❌ NO --vscode-* properties set on <html> element');
+				}
+				
+				// Also check a specific one via getComputedStyle
+				const computed = getComputedStyle(document.documentElement);
+				const editorBg = computed.getPropertyValue('--vscode-editor-background').trim();
+				console.log(`   --vscode-editor-background = "${editorBg || '(empty)'}"`)
+			}
+
+			function applyHostStyles(variables) {
+				if (!variables) return;
+				hostStyles = variables;
+				for (const [key, value] of Object.entries(variables)) {
+					if (value !== undefined) {
+						document.documentElement.style.setProperty(key, value);
+					}
+				}
+				updateDebugOutput();
+			}
+
+			function updateDebugOutput() {
+				const debugContent = document.getElementById('debug-content');
+				const computedStyle = getComputedStyle(document.documentElement);
+				
+				let html = '';
+				for (const varName of CSS_VARIABLES) {
+					const hostValue = hostStyles[varName] || '(not provided)';
+					const computedValue = computedStyle.getPropertyValue(varName).trim() || '(empty)';
+					html += `
+						<div class="debug-row">
+							<span class="debug-var">${varName}</span>
+							<span class="debug-value">${hostValue}</span>
+							<span class="debug-computed">${computedValue}</span>
+						</div>
+					`;
+				}
+				debugContent.innerHTML = html;
+			}
+
+			function updateStatus(ready) {
+				const status = document.getElementById('status');
+				if (ready) {
+					status.className = 'status status-ready';
+					status.textContent = 'Initialized - Host styles applied';
+				} else {
+					status.className = 'status status-waiting';
+					status.textContent = 'Waiting for initialization...';
+				}
+			}
+
+			function resizeApp() {
+				sendNotification(METHODS.SIZE_CHANGED, {
+					width: document.body.scrollWidth,
+					height: document.body.scrollHeight,
+				});
+			}
+
+			// Initialize the MCP App
+			try {
+				console.log('=== BEFORE ui/initialize ===');
+				logVscodeStyles();
+
+				const initResult = await sendRequest(METHODS.INITIALIZE, {
+					appInfo: {
+						name: 'style-showcase-app',
+						version: '1.0.0',
+					},
+					appCapabilities: {},
+					protocolVersion: PROTOCOL_VERSION,
+				});
+
+				console.log('=== AFTER ui/initialize (got result) ===');
+				console.log('Initialize result:', initResult);
+				logVscodeStyles();
+
+				// Apply host theme
+				if (initResult?.hostContext?.theme) {
+					document.documentElement.style.colorScheme = initResult.hostContext.theme;
+				}
+
+				// Apply host styles
+				if (initResult?.hostContext?.styles?.variables) {
+					applyHostStyles(initResult.hostContext.styles.variables);
+				}
+
+				console.log('=== AFTER applying host styles ===');
+				logVscodeStyles();
+
+				updateStatus(true);
+
+				// Send initialized notification
+				sendNotification(METHODS.INITIALIZED, {});
+
+				// Listen for tool result
+				onNotification(METHODS.TOOL_RESULT, (params) => {
+					console.log('Tool result:', params);
+					const resultEl = document.getElementById('tool-result');
+					if (params.content?.[0]?.text) {
+						resultEl.textContent = 'Tool Result: ' + params.content[0].text;
+					}
+					resizeApp();
+				});
+
+				// Listen for host context changes
+				onNotification('ui/notifications/host-context-changed', (params) => {
+					console.log('Host context changed:', params);
+					logVscodeStyles();
+					if (params?.theme) {
+						document.documentElement.style.colorScheme = params.theme;
+					}
+					if (params?.styles?.variables) {
+						applyHostStyles(params.styles.variables);
+					}
+					resizeApp();
+				});
+
+				// Initial debug output
+				updateDebugOutput();
+
+				// Initial size notification
+				resizeApp();
+
+				// Log vscode styles on init and periodically
+				console.log('Initial vscode styles check:');
+				logVscodeStyles();
+				setInterval(() => {
+					console.log('[Periodic check]');
+					logVscodeStyles();
+				}, 2000);
+
+			} catch (err) {
+				console.error('Failed to initialize:', err);
+				updateStatus(false);
+				updateDebugOutput();
+			}
+		</script>
+	</head>
+	<body>
+		<h1>MCP Apps Style Showcase</h1>
+		
+		<div id="status" class="status status-waiting">Waiting for initialization...</div>
+		<div id="tool-result"></div>
+
+		<div class="section">
+			<h2>Background Colors</h2>
+			<div class="color-grid">
+				<div class="swatch bg-primary"><span class="swatch-label">primary</span></div>
+				<div class="swatch bg-secondary"><span class="swatch-label">secondary</span></div>
+				<div class="swatch bg-tertiary"><span class="swatch-label">tertiary</span></div>
+				<div class="swatch bg-inverse"><span class="swatch-label">inverse</span></div>
+				<div class="swatch bg-ghost"><span class="swatch-label">ghost</span></div>
+				<div class="swatch bg-info"><span class="swatch-label">info</span></div>
+				<div class="swatch bg-danger"><span class="swatch-label">danger</span></div>
+				<div class="swatch bg-success"><span class="swatch-label">success</span></div>
+				<div class="swatch bg-warning"><span class="swatch-label">warning</span></div>
+				<div class="swatch bg-disabled"><span class="swatch-label">disabled</span></div>
+			</div>
+		</div>
+
+		<div class="section">
+			<h2>Text Colors</h2>
+			<div class="color-grid">
+				<div class="swatch text-primary">Primary Text</div>
+				<div class="swatch text-secondary">Secondary Text</div>
+				<div class="swatch text-tertiary">Tertiary Text</div>
+				<div class="swatch text-inverse">Inverse Text</div>
+				<div class="swatch text-info">Info Text</div>
+				<div class="swatch text-danger">Danger Text</div>
+				<div class="swatch text-success">Success Text</div>
+				<div class="swatch text-warning">Warning Text</div>
+				<div class="swatch text-disabled">Disabled Text</div>
+				<div class="swatch text-ghost">Ghost Text</div>
+			</div>
+		</div>
+
+		<div class="section">
+			<h2>Border Colors</h2>
+			<div class="color-grid">
+				<div class="border-sample border-primary">primary</div>
+				<div class="border-sample border-secondary">secondary</div>
+				<div class="border-sample border-tertiary">tertiary</div>
+				<div class="border-sample border-inverse">inverse</div>
+				<div class="border-sample border-ghost">ghost</div>
+				<div class="border-sample border-info">info</div>
+				<div class="border-sample border-danger">danger</div>
+				<div class="border-sample border-success">success</div>
+				<div class="border-sample border-warning">warning</div>
+				<div class="border-sample border-disabled">disabled</div>
+			</div>
+		</div>
+
+		<div class="section">
+			<h2>Ring Colors (Focus Outlines)</h2>
+			<div class="color-grid">
+				<div class="ring-sample ring-primary">primary</div>
+				<div class="ring-sample ring-secondary">secondary</div>
+				<div class="ring-sample ring-inverse">inverse</div>
+				<div class="ring-sample ring-info">info</div>
+				<div class="ring-sample ring-danger">danger</div>
+				<div class="ring-sample ring-success">success</div>
+				<div class="ring-sample ring-warning">warning</div>
+			</div>
+		</div>
+
+		<div class="section">
+			<h2>Typography - Font Families</h2>
+			<p class="font-sans-sample" style="margin-bottom: 0.5rem;">This text uses --font-sans (Sans-serif font family)</p>
+			<p class="font-mono-sample">This text uses --font-mono (Monospace font family)</p>
+		</div>
+
+		<div class="section">
+			<h2>Typography - Font Weights</h2>
+			<p class="weight-normal">Normal weight (--font-weight-normal)</p>
+			<p class="weight-medium">Medium weight (--font-weight-medium)</p>
+			<p class="weight-semibold">Semibold weight (--font-weight-semibold)</p>
+			<p class="weight-bold">Bold weight (--font-weight-bold)</p>
+		</div>
+
+		<div class="section">
+			<h2>Typography - Text Sizes</h2>
+			<p style="font-size: var(--font-text-xs-size); line-height: var(--font-text-xs-line-height);">XS: The quick brown fox (--font-text-xs-size)</p>
+			<p style="font-size: var(--font-text-sm-size); line-height: var(--font-text-sm-line-height);">SM: The quick brown fox (--font-text-sm-size)</p>
+			<p style="font-size: var(--font-text-md-size); line-height: var(--font-text-md-line-height);">MD: The quick brown fox (--font-text-md-size)</p>
+			<p style="font-size: var(--font-text-lg-size); line-height: var(--font-text-lg-line-height);">LG: The quick brown fox (--font-text-lg-size)</p>
+		</div>
+
+		<div class="section">
+			<h2>Typography - Heading Sizes</h2>
+			<p style="font-size: var(--font-heading-xs-size); line-height: var(--font-heading-xs-line-height); font-weight: var(--font-weight-semibold);">Heading XS</p>
+			<p style="font-size: var(--font-heading-sm-size); line-height: var(--font-heading-sm-line-height); font-weight: var(--font-weight-semibold);">Heading SM</p>
+			<p style="font-size: var(--font-heading-md-size); line-height: var(--font-heading-md-line-height); font-weight: var(--font-weight-semibold);">Heading MD</p>
+			<p style="font-size: var(--font-heading-lg-size); line-height: var(--font-heading-lg-line-height); font-weight: var(--font-weight-semibold);">Heading LG</p>
+			<p style="font-size: var(--font-heading-xl-size); line-height: var(--font-heading-xl-line-height); font-weight: var(--font-weight-semibold);">Heading XL</p>
+			<p style="font-size: var(--font-heading-2xl-size); line-height: var(--font-heading-2xl-line-height); font-weight: var(--font-weight-semibold);">Heading 2XL</p>
+			<p style="font-size: var(--font-heading-3xl-size); line-height: var(--font-heading-3xl-line-height); font-weight: var(--font-weight-semibold);">Heading 3XL</p>
+		</div>
+
+		<div class="section">
+			<h2>Border Radius</h2>
+			<div class="radius-grid">
+				<div class="radius-sample radius-xs">xs</div>
+				<div class="radius-sample radius-sm">sm</div>
+				<div class="radius-sample radius-md">md</div>
+				<div class="radius-sample radius-lg">lg</div>
+				<div class="radius-sample radius-xl">xl</div>
+				<div class="radius-sample radius-full">full</div>
+			</div>
+		</div>
+
+		<div class="section">
+			<h2>Shadows</h2>
+			<div class="shadow-grid">
+				<div class="shadow-sample shadow-hairline">hairline</div>
+				<div class="shadow-sample shadow-sm">sm</div>
+				<div class="shadow-sample shadow-md">md</div>
+				<div class="shadow-sample shadow-lg">lg</div>
+			</div>
+		</div>
+
+		<div id="debug">
+			<h2>CSS Custom Properties Debug</h2>
+			<div class="debug-row" style="font-weight: var(--font-weight-bold); border-bottom: 2px solid var(--color-border-tertiary);">
+				<span class="debug-var">Variable Name</span>
+				<span class="debug-value">Host Value</span>
+				<span class="debug-computed">Computed Value</span>
+			</div>
+			<div id="debug-content"></div>
+		</div>
+	</body>
+</html>

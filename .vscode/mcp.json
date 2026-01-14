@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "vscode-style-reproduction": {
+      "type": "http",
+      "url": "http://localhost:3000/mcp"
+    }
+  }
+}
