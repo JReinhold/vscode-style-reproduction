@@ -1,7 +1,7 @@
 # VS Code MCP Apps Style Bug Reproduction
 
 
-![Demo of reproduction](./media/reproduction-video.mp4)
+<video src="./media/reproduction-video.mp4" controls></video>
 
 > **Note:** MCP Apps UI resources are only available in **VS Code Insiders** as of 2026-01-14.
 
